@@ -26,6 +26,7 @@
         </c:if>
         
         <c:if test="${userInDB == false}">
+            
             <h1>Manage Users</h1>
             
             <p>No Users Found. Please Add a User.</p>
@@ -33,7 +34,9 @@
             
             
             <c:if test="${addUser == true}">
+                
                 <h1>Add User</h1>
+                
                 <table>
                     <tr>Email:</tr><tr><input type="text" name="insertedEmail" required></tr>
                     <tr>First Name:</tr><tr><input type="text" name="insertedFirstName" required></tr>
@@ -48,7 +51,9 @@
             </c:if>
         
             <c:if test="${editUser == true}">
+                
                 <h1>Edit User</h1>
+                
                 <table>
                     <tr>Email:</tr><tr><input type="text" name="insertedEmail" required></tr>
                     <tr>First Name:</tr><tr><input type="text" name="insertedFirstName" required></tr>
@@ -57,6 +62,9 @@
                     <tr>Role:</tr><tr><select name="role"><option value="sysAdmin">System Admin</option><option value="regUser">Regular User</option></select></tr>
                     <tr><input type="submit" value="Update"><input type="submit" value="Cancel"</tr>
                 </table>
+                <c:if test="${blankFields == true}">
+                    All Fields Required
+                </c:if>
             </c:if>
     </body>
 </html>

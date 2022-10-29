@@ -35,3 +35,4 @@ INSERT INTO `user` (`email`,`first_name`,`last_name`,`password`,`role`)
 	VALUES ('cprg352+anne@gmail.com', 'Anne','Annerson', 'password', 2);
 INSERT INTO `user` (`email`,`first_name`,`last_name`,`password`,`role`)
 	VALUES ('cprg352+barb@gmail.com', 'Barb','Barber', 'password', 2);
+
