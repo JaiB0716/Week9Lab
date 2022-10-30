@@ -1,14 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package models;
 
-/**
- *
- * @author Owner
- */
-public class Role {
+import java.io.Serializable;
+
+public class Role implements Serializable {
+    
+    String roleTitle;
+    int roleNum;
+    
+    public Role(int roleNum) {
+        this.roleNum = roleNum;
+        this.roleTitle = null;
+    }
+    
+    public Role(int roleNum, String roleTitle) {
+        this.roleNum = roleNum;
+        this.roleTitle = roleTitle;
+    }
+
+    public String getRoleTitle() {
+        return roleTitle;
+    }
+
+    public void setRoleTitle(String roleTitle) {
+        this.roleTitle = roleTitle;
+    }
+
+    public int getRoleNum() {
+        return roleNum;
+    }
+
+    public void setRoleNum(int roleNum) {
+        this.roleNum = roleNum;
+    }
     
 }

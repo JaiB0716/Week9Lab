@@ -14,11 +14,11 @@ public class UserDB {
     PreparedStatement ps = null;
     ResultSet rs = null;
     
-    public ArrayList<Users> getUsers() throws Exception {
+    public ArrayList<User> getUsers() throws Exception {
         
         String retrieveUsers = "SELECT *" + "FROM user;";
         
-        ArrayList<Users> appUsers = new ArrayList<>();
+        ArrayList<User> appUsers = new ArrayList<>();
         
         try {
             
@@ -103,7 +103,7 @@ public class UserDB {
                 String userPassword = rs.getString(4);
                 Role role = new Role(rs.getInt(5));
                 
-                exUser = new User(userEmail, userFirstName, userlastName, userPassword, role);
+                exUser = new User(userEmail, userFirstName, userLastName, userPassword, role);
             }
         } finally {
             close();
