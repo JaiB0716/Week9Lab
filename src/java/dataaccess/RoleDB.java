@@ -14,7 +14,7 @@ public class RoleDB {
     PreparedStatement ps = null;
     ResultSet rs = null;
     
-    public ArrayList<Role> getAllRoles() throws Exception {
+    public ArrayList<Role> getRoles() throws Exception {
         
         String retrieveRoles = "SELECT *" + "FROM role;";
         

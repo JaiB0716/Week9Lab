@@ -38,10 +38,10 @@
                 <h1>Add User</h1>
                 
                 <table>
-                    <tr>Email:</tr><tr><input type="text" name="insertedEmail" required></tr>
-                    <tr>First Name:</tr><tr><input type="text" name="insertedFirstName" required></tr>
-                    <tr>Last Name:</tr><tr><input type="text" name="insertedLastName" required></tr>
-                    <tr>Password</tr><tr><input type="password" name="password" required></tr>
+                    <tr>Email:</tr><tr><input type="text" name="userEmail" required></tr>
+                    <tr>First Name:</tr><tr><input type="text" name="userFirstName" required></tr>
+                    <tr>Last Name:</tr><tr><input type="text" name="userLastName" required></tr>
+                    <tr>Password</tr><tr><input type="password" name="userPassword" required></tr>
                     <tr>Role:</tr><tr><select name="role"><option value="sysAdmin">System Admin</option><option value="regUser">Regular User</option></select></tr>
                     <tr><input type="submit" value="Add User"></tr>
                 </table>
