@@ -26,7 +26,7 @@ public class UserServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         try {
-            List<User> userList = uService.retrieveAllUsers();
+            List<User> userList = uService.getAll();
             
             request.setAttribute("userList", userList);
             
@@ -45,7 +45,7 @@ public class UserServlet extends HttpServlet {
                     String userEmail = request.getParameter("email");
                     String roleName = request.getParameter("role");
                     
-                    User user = uService.retrieveUser(userEmail);
+                    User user = uService.get(userEmail);
                     
                     request.setAttribute("userEmail", userEmail);
                     request.setAttribute("selectedUser", user);
@@ -62,7 +62,7 @@ public class UserServlet extends HttpServlet {
                 try {
                     
                     String email = request.getParameter("email");
-                    uService.removeUser(email);
+                    uService.delete(email);
                     
                     request.setAttribute("deleteUser", true);
                     
@@ -86,22 +86,22 @@ public class UserServlet extends HttpServlet {
         UserService uService = new UserService();
         RoleService rService = new RoleService();
 
-        String userEmail = request.getParameter("email");
-        String userFirstName = request.getParameter("firstName");
-        String userLastName = request.getParameter("lastName");
-        String userPassword = request.getParameter("password");
-        String roleNum = request.getParameter("role"); 
+        String email = request.getParameter("email");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String password = request.getParameter("password");
+        String role = request.getParameter("role"); 
         int userRoleNum = 0;
 
         String action = request.getParameter("action");
 
         try {
-            List<User> userList = uService.retrieveAllUsers();
+            List<User> userList = uService.getAll();
             
             request.setAttribute("userList", userList);
             
-            if (userEmail == null || userEmail.equals("") || userFirstName == null || userFirstName.equals("") || userLastName == null || userLastName.equals("")
-                    || userPassword == null || userPassword.equals("")) {
+            if (email == null || email.equals("") || firstName == null || firstName.equals("") || lastName == null || lastName.equals("")
+                    || password == null || password.equals("")) {
                 
                 request.setAttribute("blankFields", true);
                 
@@ -118,7 +118,7 @@ public class UserServlet extends HttpServlet {
                 switch (action) {
                     
                     case "add":
-                        if (roleNum.equals("1")) {
+                        if (role.equals("1")) {
                             userRoleNum = 1;
                         } else {
                             userRoleNum = 2;
@@ -126,25 +126,25 @@ public class UserServlet extends HttpServlet {
                                             
                         for (int i = 0; i < userList.size(); i++) {
                             
-                            if (userEmail.equals(userList.get(i).getUserEmail())) {
+                            if (email.equals(userList.get(i).getEmail())) {
                                 
                                 request.setAttribute("mes", "Error. Email is already taken");
                                 
                                 getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
                             }
                         }
-                        uService.addUser(userEmail, userFirstName, userLastName, userPassword, rService.retrieveRoles(userRoleNum));
+                        uService.insert(email, firstName, lastName, password, rService.get(userRoleNum));
                         
                         request.setAttribute("message", "add");
                         break;
                     case "update":
-                        if (roleNum.equals("system admin")) {
+                        if (role.equals("system admin")) {
                             userRoleNum =1 ;
                         } else{
                            userRoleNum = 2;
                         }
                         
-                        uService.updateUser(userEmail, userFirstName, userLastName, userPassword, rService.retrieveRoles(userRoleNum));
+                        uService.update(email, firstName, lastName, password, rService.get(userRoleNum));
                         request.setAttribute("message", "update");
                         break;
                 }
@@ -157,7 +157,7 @@ public class UserServlet extends HttpServlet {
 
         try {
             
-            List<User> userList = uService.retrieveAllUsers();
+            List<User> userList = uService.getAll();
             request.setAttribute("userList", userList);
 
         } catch (Exception ex) {

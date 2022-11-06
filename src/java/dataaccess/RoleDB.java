@@ -1,82 +1,38 @@
 package dataaccess;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.*;
+import javax.persistence.EntityManager;
 import models.Role;
 
 public class RoleDB {
     
-    public List<Role> retrieveAllRoles() throws Exception {
-        List<Role> roleList = new ArrayList<>();
-    
-    ConnectPool connectPool = ConnectPool.getInstance();
-    Connection connect = connectPool.getConnection();
-    
-    PreparedStatement ps = null;
-    ResultSet rs = null;
-    
-    String selectSql = "SELECT role_id, role_name FROM role";
+    public List<Role> getAll() throws Exception {
+ 
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
     
     try {
          
-        ps = connect.prepareStatement(selectSql);
-        rs = ps.executeQuery(selectSql);
-        
-        while(rs.next()) {
-            
-            int rNum = rs.getInt(1);
-            String rName = rs.getString(2);
-            
-            Role role = new Role(rNum, rName);
-            roleList.add(role);
-            }
+        List<Role> rolesList = em.createNamedQuery("Role.findAll", Role.class).getResultList();
+        return rolesList;
         
         } finally {
         
-        DBUtil.closePreparedStatement(ps);
-        DBUtil.closeResultSet(rs);
-        connectPool.freeConnection(connect);
+          em.close();
     }
-    
-    return roleList;
-    
 }
     
-    public Role retrieveRoles(int rNum) throws Exception {
+    public Role get(int roleId) throws Exception {
         
-        Role role = null;
-        
-        ConnectPool connectPool = ConnectPool.getInstance();
-        Connection connect = connectPool.getConnection();
-    
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        
-        String selectSql = "SELECT role_id, role_name FROM role WHERE role_id=?";
+           EntityManager em = DBUtil.getEmFactory().createEntityManager();
         
         try {
-            
-            ps = connect.prepareStatement(selectSql);
-            
-            ps.setInt(1, rNum);
-            rs = ps.executeQuery();
-            
-            if(rs.next()) {
-                
-                int rNum2 = rs.getInt(1);
-                String rName = rs.getString(2);
-                role = new Role(rNum2, rName);
-            }
-            
+
+            Role role = em.find(Role.class, roleId);
+            return role;
             } finally {
             
-            DBUtil.closePreparedStatement(ps);
-            DBUtil.closeResultSet(rs);
-            connectPool.freeConnection(connect);
+              em.close();
         }
-        
-        return role;
-    }
+
+}
 }

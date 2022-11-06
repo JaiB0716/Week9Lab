@@ -6,18 +6,18 @@ import models.Role;
 
 public class RoleService {
     
-   public Role retrieveRoles(int roleId) throws Exception {
+   public Role get(int roleId) throws Exception {
        
-      RoleDB rolesDb =  new RoleDB(); 
-       Role role = rolesDb.retrieveRoles(roleId);
+      RoleDB roleDB =  new RoleDB(); 
+       Role role = roleDB.get(roleId);
        
        return role;
    }
    
-   public List<Role> retrieveAllRoles() throws Exception {
+   public List<Role> getAll() throws Exception {
        
-       RoleDB rolesDb =  new RoleDB();
-       List<Role> rolesList = rolesDb.retrieveAllRoles();
+       RoleDB roleDB =  new RoleDB();
+       List<Role> rolesList = roleDB.getAll();
        
        return rolesList; 
    }
