@@ -6,35 +6,19 @@ import models.Role;
 
 public class RoleService {
     
-    public static ArrayList<Role> getRoles() {
-        ArrayList<Role> empRoles;
-        
-        try {
-            
-            empRoles = new RoleDB.getRoles();
-            
-        } catch (Exception e) {
-            System.out.println(e);
-            empRoles = null;
-        }
-        
-        return empRoles;
-    }
-    
-    public static String retrieveRoleTitle (int roleNum) {
-        
-        String roleTitle;
-        
-        try {
-            
-            roleTitle = new RoleDB.getEmpRoleTitle();
-        } catch (Exception e) {
-            
-            System.out.println(e);
-            roleTitle = "null";
-        
-        }
-        
-        return roleTitle;
-    }
+   public Role retrieveRoles(int roleId) throws Exception {
+       
+      RoleDB rolesDb =  new RoleDB(); 
+       Role role = rolesDb.retrieveRoles(roleId);
+       
+       return role;
+   }
+   
+   public List<Role> retrieveAllRoles() throws Exception {
+       
+       RoleDB rolesDb =  new RoleDB();
+       List<Role> rolesList = rolesDb.retrieveAllRoles();
+       
+       return rolesList; 
+   }
 }

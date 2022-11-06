@@ -1,7 +1,7 @@
 <%-- 
     Document   : users
     Created on : Oct 27, 2022, 11:18:07 AM
-    Author     : Owner
+    Author     : JaiB
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,6 +13,9 @@
         <title>Application User Database</title>
     </head>
     <body>
+        
+        <c:if test="${message = 'error'}">ERROR!!</c:if>
+        
         <c:if test="${usersInDB == True}">
             
         <h1>Manage Users</h1>
@@ -21,7 +24,15 @@
             <tr>
                 <th>Email</th><th>First Name</th><th>Last Name</th><th>Role</th><th></th><th></th>
             </tr>
-            <tr><input type="text" name="email"></tr><tr><input type="text" name="firsName"></tr><tr><input type="text" name="lastName"></tr><tr><input type="text" name="role"></tr><tr><a href="<c:url value='/UserServlet?action=edit'/>">Edit</a></tr><tr><a href="<c:url value='/UserServlet?action=delete'/>">Delete</a></tr>
+            <tr>
+                <td><c:out value="${appUser.userEmail}" /></td>
+                <td><c:out value="${appUser.userFirstName}" /></td>
+                <td><c:out value="${appUser.userLastName}" /></td>
+                <td><c:out value="${appUser.userPassword}" /></td>
+                <td><c:out value="${appUser.role.roleName}" /></td>
+                <td><input type="hidden" name="action" value="edit"><a href="<c:url value='/userList?action=edit&amp'/>">Edit</a></td>
+                <td><input type="hidden" name="action" value="delete"><a href="<c:url value='/userList?action=delete&amp'/>">Delete</a></td>
+            </tr>
         </table>
         </c:if>
         
@@ -38,10 +49,10 @@
                 <h1>Add User</h1>
                 
                 <table>
-                    <tr>Email:</tr><tr><input type="text" name="userEmail" required></tr>
-                    <tr>First Name:</tr><tr><input type="text" name="userFirstName" required></tr>
-                    <tr>Last Name:</tr><tr><input type="text" name="userLastName" required></tr>
-                    <tr>Password</tr><tr><input type="password" name="userPassword" required></tr>
+                    <tr>Email:</tr><tr><input type="text" name="email" required></tr>
+                    <tr>First Name:</tr><tr><input type="text" name="firstName" required></tr>
+                    <tr>Last Name:</tr><tr><input type="text" name="lastName" required></tr>
+                    <tr>Password</tr><tr><input type="password" name="password" required></tr>
                     <tr>Role:</tr><tr><select name="role"><option value="sysAdmin">System Admin</option><option value="regUser">Regular User</option></select></tr>
                     <tr><input type="submit" value="Add User"></tr>
                 </table>

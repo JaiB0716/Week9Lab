@@ -4,19 +4,23 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     
-    String userEmail;
-    String userFirstName;
-    String userLastName;
-    String userPassword;
-    Role role;
+    private String userEmail;
+    private String userFirstName;
+    private String userLastName;
+    private String userPassword;
+    private Role role;
     
     public User(String userEmail, String userFirtName, String userLastName, String userPassword, Role role) {
         
         this.userEmail = userEmail;
-        this.userFirstName = userFirstName;
+        this.userFirstName = userFirstName; 
         this.userLastName = userLastName;
         this.userPassword = userPassword;
         this.role = role;
+    }
+
+    public User() {
+     
     }
 
     public String getUserEmail() {

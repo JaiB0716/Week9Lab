@@ -8,64 +8,75 @@ import models.Role;
 
 public class RoleDB {
     
+    public List<Role> retrieveAllRoles() throws Exception {
+        List<Role> roleList = new ArrayList<>();
+    
     ConnectPool connectPool = ConnectPool.getInstance();
     Connection connect = connectPool.getConnection();
     
     PreparedStatement ps = null;
     ResultSet rs = null;
     
-    public ArrayList<Role> getRoles() throws Exception {
-        
-        String retrieveRoles = "SELECT *" + "FROM role;";
-        
-        ArrayList<Role> empRole = new ArrayList<>();
-        
-    try {
-        
-        ps = connect.prepareStatement(retrieveRoles);
-        rs = ps.executeQuery();
-        
-        while (rs.next()) {
-            
-            int roleNum = rs.getInt(1);
-            String roleTitle = rs.getString(2);
-            
-            Role empRoles = new Role(roleNum, roleTitle);
-            empRole.add(empRoles);
-            
-        } 
-    }finally {
-        close();
-     }
-        return empRole;
-    }
+    String selectSql = "SELECT role_id, role_name FROM role";
     
-    public String getEmpRoleTitle(int roleNum) throws Exception {
+    try {
+         
+        ps = connect.prepareStatement(selectSql);
+        rs = ps.executeQuery(selectSql);
         
-        String selectEmpTitle = "SELECT role_name FROM role" + "WHERE role_id = ?;";
-        
-        String roleTitle; 
-        
-        try {
-             
-            ps = connect.prepareStatement(selectEmpTitle);
-            ps.setInt(1, roleNum);
+        while(rs.next()) {
             
-            rs = ps.executeQuery();
-            rs.next();
+            int rNum = rs.getInt(1);
+            String rName = rs.getString(2);
             
-            roleTitle = rs.getString(1);
+            Role role = new Role(rNum, rName);
+            roleList.add(role);
+            }
+        
         } finally {
-            close();
-        }
-        return roleTitle;
-    }
-
-    private void close() {
         
         DBUtil.closePreparedStatement(ps);
         DBUtil.closeResultSet(rs);
         connectPool.freeConnection(connect);
     }
     
+    return roleList;
+    
+}
+    
+    public Role retrieveRoles(int rNum) throws Exception {
+        
+        Role role = null;
+        
+        ConnectPool connectPool = ConnectPool.getInstance();
+        Connection connect = connectPool.getConnection();
+    
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        String selectSql = "SELECT role_id, role_name FROM role WHERE role_id=?";
+        
+        try {
+            
+            ps = connect.prepareStatement(selectSql);
+            
+            ps.setInt(1, rNum);
+            rs = ps.executeQuery();
+            
+            if(rs.next()) {
+                
+                int rNum2 = rs.getInt(1);
+                String rName = rs.getString(2);
+                role = new Role(rNum2, rName);
+            }
+            
+            } finally {
+            
+            DBUtil.closePreparedStatement(ps);
+            DBUtil.closeResultSet(rs);
+            connectPool.freeConnection(connect);
+        }
+        
+        return role;
+    }
 }

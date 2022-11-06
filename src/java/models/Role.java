@@ -4,12 +4,11 @@ import java.io.Serializable;
 
 public class Role implements Serializable {
     
-    String roleTitle;
-    int roleNum;
+    private String roleTitle;
+    private int roleNum;
     
-    public Role(int roleNum) {
-        this.roleNum = roleNum;
-        this.roleTitle = null;
+    public Role() {
+        
     }
     
     public Role(int roleNum, String roleTitle) {
